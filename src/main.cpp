@@ -10,16 +10,16 @@
 
 bool invertDirMotor = false;
 bool invertEsqMotor = false;
-int motorPinA0 = 11;
-int motorPinA1 = 10;
-int motorPinB0 = 9;
-int motorPinB1 = 6;
+int motorPinA0 = 0;
+int motorPinA1 = 1;
+int motorPinB0 = 2;
+int motorPinB1 = 3;
 const int offsetA = 1;
 const int offsetB = 1;
-int speedA = 0;
-int speedB = 0;
+int speedA = 200;
+int speedB = 200;
 
-PIDCalc pid{PIDCalc(&speedA, &speedB)};
+//PIDCalc pid{PIDCalc(&speedA, &speedB)};
 MotorActual mA{MotorActual(&speedA, motorPinA0, motorPinA1, invertDirMotor)};
 MotorActual mB{MotorActual(&speedB, motorPinB0, motorPinB1,  invertEsqMotor)};
 
@@ -27,14 +27,15 @@ void setup(){
     Serial.begin(115200);
     //pid.setup();
     pinMode(LED_BUILTIN, OUTPUT);
+    pinMode(motorPinA0, OUTPUT);
+    pinMode(motorPinA1, OUTPUT);
 }
 
 void loop(){
     //pid.iterate();
     //mA.move();
     //mB.move();
-    digitalWrite(LED_BUILTIN, 1);
-    delay(500);
-    digitalWrite(LED_BUILTIN, 0);
-    delay(500);
+    analogWrite(motorPinA0, 200);
+    analogWrite(motorPinA1, 0);
+    delay(1000);
 }
